@@ -1,0 +1,16 @@
+#!/bin/bash
+
+OWNER=nosada
+AURPKG_REPOSITORY=aurpkg
+
+PACMAN="Update installed packages hosted in official repositories"
+echo -e "\033[1;37m${PACMAN}\033[0;39m"
+pacmatic -Syu
+echo
+
+AUR="Update installed packages hosted in AUR"
+echo -e "\033[1;37m${AUR}\033[0;39m"
+sudo -u $OWNER aursync -unr
+echo
+
+# vim:set ts=2 sw=2 et:

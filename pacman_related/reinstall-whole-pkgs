@@ -1,0 +1,6 @@
+#! /bin/bash
+
+for PKG in `pacman -Q | cut -d' ' -f1`
+do
+	pacman -S --noconfirm $PKG
+done

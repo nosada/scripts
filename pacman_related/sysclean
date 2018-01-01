@@ -1,0 +1,12 @@
+#!/bin/bash
+
+CLEAN="clean unneeded package cache"
+echo -e "\033[1;37m${CLEAN}\033[0;39m"
+yes | pacman -Scc
+echo
+
+OPTIMIZE="optimize package database"
+echo -e "\033[1;37m${OPTIMIZE}\033[0;39m"
+pacman-optimize
+
+# vim:set ts=2 sw=2 et:

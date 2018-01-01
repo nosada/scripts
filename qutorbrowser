@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# Use Tor as HTTP proxy for qutebrowser in temporary session.
+# This code is based on https://gist.github.com/pkillnine/7396149ccf4166057cea91517d4dbeb7
+ 
+if (( $# < 1 )); then
+    BASECMD="qutebrowser --backend webengine"
+elif (( $# >= 1 )); then
+    BASECMD="$@"
+fi
+ 
+TMPBASEDIR=`mktemp -dt qutebrowser-tmp-session-XXX`
+QBCONFIGDIR="$HOME/.config/qutebrowser"
+QBDATADIR="$HOME/.local/share/qutebrowser"
+
+function qbcommand {
+	echo Executing: $BASECMD --basedir $TMPBASEDIR ':set window.title_format "[P] {perc}{title}{title_sep}QuTorbrowser"' ':set tabs.title.format "[P] {index}: {title}"'
+	$BASECMD --basedir $TMPBASEDIR ':set window.title_format "[P] {perc}{title}{title_sep}QuTorbrowser"' ':set tabs.title.format "[P] {index}: {title}"'
+}
+ 
+function cleanup {
+echo Removing "$TMPBASEDIR"
+rm -rf "$TMPBASEDIR"
+}
+ 
+mkdir -p "$TMPBASEDIR/config"
+cp -r $QBCONFIGDIR/* "$TMPBASEDIR/config"
+cat $QBDATADIR/blocked-hosts >> "$TMPBASEDIR/config/blocked-hosts"
+
+HOME_ON_TOR="https://3g2upl4pq6kufc4m.onion/"
+CHECK_TOR=`machinectl list | grep torspawn`
+if [ "$CHECK_TOR" != "" ]; then
+	echo "use local tor proxy"
+	TOR_PROXY="torspawn"
+	PORT="8118"
+else
+	echo "use external tor proxy"
+	TOR_PROXY="bertha"
+	PORT="58118"
+fi
+sed -i -e 's|proxy = .*|proxy = "http://'$TOR_PROXY':'$PORT'"|g' \
+	"$TMPBASEDIR/config/config.py"
+sed -i -e 's|start_pages = .*|start_pages = "'$HOME_ON_TOR'"|g' \
+	"$TMPBASEDIR/config/config.py"
+sed -i -e 's|default_page = .*|default_page = "'$HOME_ON_TOR'"|g' \
+	"$TMPBASEDIR/config/config.py"
+ 
+qbcommand
+ 
+trap cleanup EXIT
