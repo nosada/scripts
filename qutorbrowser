@@ -35,7 +35,7 @@ if [ "$CHECK_TOR" != "" ]; then
 	PORT="8118"
 else
 	echo "use external tor proxy"
-	TOR_PROXY="bertha"
+	TOR_PROXY="bertha.local"
 	PORT="58118"
 fi
 sed -i -e 's|proxy = .*|proxy = "http://'$TOR_PROXY':'$PORT'"|g' \
