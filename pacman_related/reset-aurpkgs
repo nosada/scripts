@@ -1,0 +1,13 @@
+#!/bin/bash
+
+REPO_NAME="aurpkg"
+REPO_LOCATION=$(grep Server /etc/pacman.d/$REPO_NAME | awk '{print $3}' | cut -d '/' -f 3-)
+
+rm $REPO_LOCATION/*.pkg.tar
+repose -vf $REPO_NAME -r $REPO_LOCATION
+
+cd $REPO_LOCATION
+for PKG in $(pacman -Qqm); do
+	bacman $PKG
+done
+repose -vf $REPO_NAME -r $REPO_LOCATION
