@@ -7,6 +7,7 @@ Scripts for personal use:
   - sysclean: clean package cache and optimize package databases
   - sysupdate: update installed packages (official repos & AUR)
   - update-git-managed-pkgs: update installed packages whose name contains '-git' suffix
+  - reset-aurpkgs: reset local repository where AUR packages are registered
 
 To install scripts (put scripts to `/usr/local/bin/`):
 
