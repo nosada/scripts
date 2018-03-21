@@ -44,6 +44,8 @@ sed -i -e 's|start_pages = .*|start_pages = "'$HOME_ON_TOR'"|g' \
 	"$TMPBASEDIR/config/config.py"
 sed -i -e 's|default_page = .*|default_page = "'$HOME_ON_TOR'"|g' \
 	"$TMPBASEDIR/config/config.py"
+sed -i -e 's|private_browsing = .*|private_browsing = True|g' \
+	"$TMPBASEDIR/config/config.py"
  
 qbcommand
  
