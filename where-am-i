@@ -1,0 +1,5 @@
+#!/bin/bash
+
+GLOBAL_IPADDR=$(curl httpbin.org/ip 2>/dev/null | jq -r .origin)
+LOCATION=$(geoiplookup $GLOBAL_IPADDR | cut -d ',' -f 2 | cut -d ' ' -f 2-)
+echo $LOCATION
