@@ -27,17 +27,20 @@ mkdir -p "$TMPBASEDIR/config"
 cp -r $QBCONFIGDIR/* "$TMPBASEDIR/config"
 cat $QBDATADIR/blocked-hosts >> "$TMPBASEDIR/config/blocked-hosts"
 
-HOME_ON_TOR="https://3g2upl4pq6kufc4m.onion/"
-CHECK_TOR=`machinectl list | grep torspawn`
+TOR_CONTAINER="torspawn"
+TOR_HOST="charlotte.local"
+CHECK_TOR=`machinectl list | grep $TOR_CONTAINER`
 if [ "$CHECK_TOR" != "" ]; then
 	echo "use local tor proxy"
-	TOR_PROXY="torspawn"
+	TOR_PROXY="$TOR_CONTAINER"
 	PORT="8118"
 else
 	echo "use external tor proxy"
-	TOR_PROXY="bertha.local"
+	TOR_PROXY="$TOR_HOST"
 	PORT="58118"
 fi
+
+HOME_ON_TOR="https://3g2upl4pq6kufc4m.onion/"
 sed -i -e 's|proxy = .*|proxy = "http://'$TOR_PROXY':'$PORT'"|g' \
 	"$TMPBASEDIR/config/config.py"
 sed -i -e 's|start_pages = .*|start_pages = "'$HOME_ON_TOR'"|g' \
