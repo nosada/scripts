@@ -3,8 +3,7 @@ SCRIPTS: qutorbrowser \
 	pacman_related/reinstall-whole-pkgs \
 	pacman_related/update-git-managed-pkgs \
 	pacman_related/sysclean \
-	pacman_related/sysupdate \
-	pacman_related/reset-aurpkgs
+	pacman_related/sysupdate
 
 all: install
 
@@ -14,7 +13,6 @@ install: ${SCRIPTS}
 	install -D -m 755 pacman_related/update-git-managed-pkgs /usr/local/bin/
 	install -D -m 755 pacman_related/sysclean /usr/local/bin/
 	install -D -m 755 pacman_related/sysupdate /usr/local/bin/
-	install -D -m 755 pacman_related/reset-aurpkgs /usr/local/bin/
 	mkdir -p /usr/local/bin/qutorbrowser
 	install -D -m 755 qutorbrowser/launch-qutorbrowser /usr/local/bin/qutorbrowser/launch-qutorbrowser
 	install -D -m 755 qutorbrowser/config.json /usr/local/bin/qutorbrowser/config.json
@@ -25,5 +23,4 @@ uninstall:
 	rm -f /usr/local/bin/update-git-managed-pkgs
 	rm -f /usr/local/bin/sysclean
 	rm -f /usr/local/bin/sysupdate
-	rm -f /usr/local/bin/reset-aurpkgs
 	rm -rf /usr/local/bin/qutorbrowser
