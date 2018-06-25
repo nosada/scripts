@@ -1,9 +1,7 @@
 #!/bin/bash
 
-AURPKG_REPOSITORY=aurpkg
-
 MSG="Update installed packages managed by git"
 echo -e "\033[1;37m${MSG}\033[0;39m"
-aursync --no-ver --repo $AURPKG_REPOSITORY -nr `pacman -Slq $AURPKG_REPOSITORY | grep -- '-git'`
+yay --editmenu -S (pacman -Qqm | grep -- '-git$')
 
 # vim:set ts=2 sw=2 et:
