@@ -7,9 +7,17 @@ echo -e "\033[1;37m${PACMAN}\033[0;39m"
 pacmatic -Syu
 echo
 
-AUR="Update installed packages hosted in AUR"
-echo -e "\033[1;37m${AUR}\033[0;39m"
-sudo -u $OWNER yay --editmenu -Syu
+UNNEEDED_PKGS=$(pacman -Qdttq)
+if [ ! "$UNNEEDED_PKGS" = "" ]; then
+  UNNEEDED="Remove unneeded packages found by 'pacman -Qdttq'"
+  echo -e "\033[1;37m${UNNEEDED}\033[0;39m"
+  pacman -Rscnu $UNNEEDED_PKGS
+  echo
+fi
+
+CACHE="Remove package caches"
+echo -e "\033[1;37m${CACHE}\033[0;39m"
+pacman --noconfirm -Scc
 echo
 
 # vim:set ts=2 sw=2 et:
