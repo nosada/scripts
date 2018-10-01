@@ -2,22 +2,24 @@
 
 OWNER=nosada
 
-PACMAN="Update installed packages hosted in official repositories"
+REFLECTOR="Generating /etc/pacman.d/mirrorlist by reflector to find fastest mirror"
+echo -e "\033[1;37m${REFLECTOR}\033[0;39m"
+reflector --age 12 --sort age --country $(shell where-am-i) --save /etc/pacman.d/mirrorlist
+
+PACMAN="Updating installed packages hosted in official repositories"
 echo -e "\033[1;37m${PACMAN}\033[0;39m"
 pacmatic -Syu
 echo
 
 UNNEEDED_PKGS=$(pacman -Qdttq)
 if [ ! "$UNNEEDED_PKGS" = "" ]; then
-  UNNEEDED="Remove unneeded packages found by 'pacman -Qdttq'"
-  echo -e "\033[1;37m${UNNEEDED}\033[0;39m"
-  pacman -Rscnu $UNNEEDED_PKGS
-  echo
+	UNNEEDED="Removing unneeded packages found by 'pacman -Qdttq'"
+	echo -e "\033[1;37m${UNNEEDED}\033[0;39m"
+	pacman -Rscnu $UNNEEDED_PKGS
+	echo
 fi
 
-CACHE="Remove package caches"
+CACHE="Removing package caches"
 echo -e "\033[1;37m${CACHE}\033[0;39m"
 pacman --noconfirm -Scc
 echo
-
-# vim:set ts=2 sw=2 et:

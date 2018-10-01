@@ -1,10 +1,8 @@
 #!/bin/bash
 
-AUR="Update installed packages hosted in AUR"
+AUR="Updating installed packages hosted in AUR"
 echo -e "\033[1;37m${AUR}\033[0;39m"
 yay --answerclean All \
-    --answerdiff Installed \
-    --answeredit All \
-    -a -Syu
-
-# vim:set ts=2 sw=2 et:
+	--answerdiff Installed \
+	--answeredit All \
+	-a -Syu

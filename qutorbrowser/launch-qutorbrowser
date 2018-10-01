@@ -4,9 +4,9 @@
 # This code is based on https://gist.github.com/pkillnine/7396149ccf4166057cea91517d4dbeb7
 
 if (( $# < 1 )); then
-    BASECMD="qutebrowser --backend webengine"
+	BASECMD="qutebrowser --backend webengine"
 elif (( $# >= 1 )); then
-    BASECMD="$@"
+	BASECMD="$@"
 fi
 
 TMPBASEDIR=`mktemp -dt qutebrowser-tmp-session-XXX`
