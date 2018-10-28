@@ -1,5 +1,6 @@
 #!/bin/bash
 
-GLOBAL_IPADDR=$(curl checkip.amazonaws.com 2>/dev/null)
-LOCATION=$(geoiplookup $GLOBAL_IPADDR | cut -d ',' -f 2 | cut -d ' ' -f 2-)
-echo $LOCATION
+GEOIP_COUNTRY_DB=$(pacman -Ql geoip2-database | grep Country | awk '{print $NF}')
+CURRENT_GLOBAL_IP_ADDR=$(curl -sS checkip.amazonaws.com)
+
+mmdblookup country names en --file $GEOIP_COUNTRY_DB --ip $CURRENT_GLOBAL_IP_ADDR | grep -v '^\s*$' | cut -d '"' -f 2
