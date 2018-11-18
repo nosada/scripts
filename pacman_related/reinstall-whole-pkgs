@@ -1,6 +1,13 @@
 #!/bin/bash
 
-for PKG in `pacman -Q | cut -d' ' -f1`
-do
-	pacman -S --noconfirm $PKG
-done
+ALL_INSTALLED_PKGS="/tmp/all_installed_packages"
+PKGS_NOT_IN_REPO="/tmp/packages_not_in_repo"
+
+pacman -Qq | sort > $ALL_INSTALLED_PKGS
+pacman -Qmq | sort > $PKGS_NOT_IN_REPO
+
+# reinstall packages in Arch repository (those in AUR is excluded)
+pacman -S --noconfirm $(comm -3 $ALL_INSTALLED_PKGS $PKGS_NOT_IN_REPO)
+
+rm -f $ALL_INSTALLED_PKGS
+rm -f $PKGS_NOT_IN_REPO
