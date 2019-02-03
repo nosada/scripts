@@ -1,10 +1,8 @@
 #!/bin/bash
 
-OWNER=nosada
-
 REFLECTOR="Generating /etc/pacman.d/mirrorlist by reflector to find fastest mirror"
 echo -e "\033[1;37m${REFLECTOR}\033[0;39m"
-reflector --age 12 --sort age --country $(where-am-i) --save /etc/pacman.d/mirrorlist
+reflector --age 12 --sort age --country "$(where-am-i)" --protocol https --protocol http --save /etc/pacman.d/mirrorlist
 TOP_MIRROR=$(grep Server /etc/pacman.d/mirrorlist | head -1 | awk '{print $3}')
 echo "Chosen mirror: $TOP_MIRROR"
 
@@ -17,7 +15,7 @@ UNNEEDED_PKGS=$(pacman -Qdttq)
 if [ ! "$UNNEEDED_PKGS" = "" ]; then
 	UNNEEDED="Removing unneeded packages found by 'pacman -Qdttq'"
 	echo -e "\033[1;37m${UNNEEDED}\033[0;39m"
-	pacman -Rscnu $UNNEEDED_PKGS
+	pacman -Rscnu "$UNNEEDED_PKGS"
 	echo
 fi
 
