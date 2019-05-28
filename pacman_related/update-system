@@ -11,11 +11,11 @@ echo -e "\033[1;37m${PACMAN}\033[0;39m"
 pacmatic -Syu
 echo
 
-UNNEEDED_PKGS=$(pacman -Qdttq)
-if [ ! "$UNNEEDED_PKGS" = "" ]; then
+mapfile -t UNNEEDED_PKGS < <(pacman -Qdttq)
+if [ ! "${UNNEEDED_PKGS[*]}" = "" ]; then
 	UNNEEDED="Removing unneeded packages found by 'pacman -Qdttq'"
 	echo -e "\033[1;37m${UNNEEDED}\033[0;39m"
-	pacman -Rscnu "$UNNEEDED_PKGS"
+	pacman -Rscnu "${UNNEEDED_PKGS[@]}"
 	echo
 fi
 
