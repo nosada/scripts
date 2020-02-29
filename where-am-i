@@ -1,6 +1,3 @@
 #!/bin/bash
 
-GEOIP_COUNTRY_DB=$(pacman -Ql geoip2-database | grep Country | awk '{print $NF}')
-CURRENT_GLOBAL_IP_ADDR=$(curl -sS checkip.amazonaws.com)
-
-mmdblookup country names en --file $GEOIP_COUNTRY_DB --ip $CURRENT_GLOBAL_IP_ADDR | grep -v '^\s*$' | cut -d '"' -f 2
+curl -sS ifconfig.co/country
