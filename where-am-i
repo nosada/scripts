@@ -1,3 +1,12 @@
 #!/bin/bash
 
-curl -sS ifconfig.co/country
+while true; do
+	LOCATION=$(curl -f -sS ifconfig.co/country)
+	RESULT=$?
+	if [ $RESULT -eq 0 ]; then
+		break
+	else
+		sleep 0.5
+	fi
+done
+echo "$LOCATION"
