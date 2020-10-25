@@ -1,0 +1,19 @@
+#!/bin/bash
+
+echo "Restart systemd-networkd"
+systemctl restart systemd-networkd
+
+echo "Stop cache DNS services"
+systemctl stop systemd-resolved unbound dnscrypt-proxy
+
+echo "Start dnscrypt-proxy and wait 5 seconds for initializing"
+systemctl start dnscrypt-proxy
+sleep 5
+
+echo "Start remaining services: unbound & systemd-resolved"
+systemctl start unbound
+sleep 1
+systemctl start systemd-resolved
+sleep 1
+
+echo "Finished. try 'drill example.com' !"
