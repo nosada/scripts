@@ -1,5 +1,0 @@
-#!/bin/bash
-
-MSG="Update installed packages managed by git"
-echo -e "\033[1;37m${MSG}\033[0;39m"
-pacman -Qmq | grep -Ee '-git$' | yay -S --needed -
