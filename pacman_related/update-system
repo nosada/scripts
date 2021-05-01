@@ -1,11 +1,5 @@
 #!/bin/bash
 
-REFLECTOR="Generating /etc/pacman.d/mirrorlist by reflector to find fastest mirror"
-echo -e "\033[1;37m${REFLECTOR}\033[0;39m"
-reflector --age 12 --sort age --country "$(where-am-i)" --protocol https --protocol http --save /etc/pacman.d/mirrorlist
-TOP_MIRROR=$(grep Server /etc/pacman.d/mirrorlist | head -1 | awk '{print $3}')
-echo "Chosen mirror: $TOP_MIRROR"
-
 PACMAN="Updating installed packages hosted in official repositories"
 echo -e "\033[1;37m${PACMAN}\033[0;39m"
 pacmatic -Syu
