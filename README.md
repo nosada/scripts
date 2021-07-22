@@ -5,9 +5,8 @@ Scripts for personal use:
 - `where-am-i`: Return your location by global IP address
 - `pacman_related/`:
   - `reinstall-whole-pkgs`: Reinstall all installed packages
-  - `sysclean`: Clean package cache and optimize package databases
-  - `sysupdate`: Update installed packages (official repos & AUR)
-  - `update-git-managed-pkgs`: Update installed packages whose name contains '-git' suffix
+  - `update-aur-pkgs`: Update AUR packages using [yay](https://github.com/Jguer/yay)
+  - `update-system`: Update system, uninstall unneeded packages and clean caches
 
 To install scripts (put scripts to `/usr/local/bin/`):
 ```
